@@ -39,7 +39,25 @@ scheduler.start()
 # load model
 tts = merge_model(MODEL_LIST)
 
-def handler(event):
+# Maximum number of jobs allowed in the queue
+MAX_QUEUE_SIZE = int(os.environ.get("MAX_QUEUE_SIZE", 10))
+
+# Create a job queue
+job_queue = []
+
+
+def concurrency_controller():
+    # Check the number of jobs in the queue
+    if len(job_queue) >= MAX_QUEUE_SIZE:
+        return True  # Queue is full, concurrent execution not allowed
+    else:
+        return False  # Concurrent execution is allowed
+
+
+async def handler(event):
+
+    job_id = uuid.uuid4()
+    job_queue.append(job_id)
 
     input = event['input']
 
@@ -89,11 +107,15 @@ def handler(event):
     logger.info(f"[VITS] finish in {(t2 - t1):.2f}s")
 
     audio_base64 = base64.b64encode(audio.getvalue()).decode('utf-8')
+    job_queue.remove(job_id)
+
     return audio_base64
+
 
 if __name__ == '__main__':
     runpod.serverless.start(
         {
-            'handler': handler
+            'handler': handler,
+            "concurrency_controller": concurrency_controller
         }
     )
