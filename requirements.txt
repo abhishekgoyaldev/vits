@@ -6,7 +6,6 @@ MarkupSafe==2.1.2
 torch
 unidecode
 six==1.16.0
-openjtalk==0.3.0.dev2
 jamo
 pypinyin
 jieba
@@ -29,4 +28,4 @@ langid
 phonemizer==3.2.1
 transformers
 pydantic==1.10.6
-gevent
+runpod
