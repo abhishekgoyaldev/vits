@@ -65,10 +65,10 @@ async def handler(event):
     id = int(input['id'])
     format = "mp3"
     lang = "AUTO"
-    length = 1
-    noise = 0.33
-    noisew = 0.4
-    max = 50
+    length = float(input.get('length', 1.2))
+    noise = float(input.get('noise', 0.667))
+    noisew = float(input.get('noisew', 0.8))
+    max = float(input.get('max', 50))
 
     logger.info(f"[VITS] id:{id} format:{format} lang:{lang} length:{length} noise:{noise} noisew:{noisew}")
     logger.info(f"[VITS] len:{len(text)} text：{text}")

@@ -18,14 +18,12 @@ indic_transliteration
 num_thai
 opencc
 audonnx
-flask==2.2.3
 soundfile==0.12.1
 graiax-silkcoder[libsndfile]
-flask_apscheduler
 fasttext
 fastlid
 langid
 phonemizer==3.2.1
-transformers
 pydantic==1.10.6
+APScheduler
 runpod
